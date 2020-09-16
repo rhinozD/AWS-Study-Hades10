@@ -63,12 +63,36 @@ Ghi chú lại kiến thức đã học trong quá trình luyện thi chứng ch
     <a>File Gateway</a>
 </p>
 
+
 <p align="center"> 
     <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/FileGatewayExtensions.png" alt="File Gateway: Extentions">
     <br/>
     <a>File Gateway: Extensions</a>
 </p>
 
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/FileGatewayReadOnlyReplicas.png" alt="File Gateway: Read Only Replicas">
+    <br/>
+    <a>File Gateway: Read Only Replicas</a>
+</p>
+
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/FileGatewayBackupAndLifeCycle.png" alt="File Gateway: Backup And LifeCycle">
+    <br/>
+    <a>File Gateway: Backup And LifeCycle</a>
+</p>
+
+- File Architectures: Những khả năng khác
+    - Amazon S3 Object Versioning
+        - Khả năng lưu trữ nhiều object versions khi chúng được sửa đổi.
+        - Có thể restore một file về version trước đó.
+        - Có thể restore toàn bộ file system về phiên bản trước đó.
+        - Phải sử dụng RefreshCache API trên Gateway để có thể notify việc restore.
+    - Amazon S3 Object Lock
+        - Cho phép File Gateway có chức năng: Write Once Read Many (WORM)
+        - Nếu có file được sửa hoặc đổi tên trên file share clients, file gateway tạo một version mới của object mà không ảnh hưởng đến versions trước, và version đã được lock đầu tiền sẽ luôn luôn không đổi.
 ###### Volume Gateway
 ###### Tape Gateway
 ##### AWS Snowball
