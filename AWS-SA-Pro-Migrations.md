@@ -2,19 +2,38 @@
 Ghi chú lại kiến thức đã học trong quá trình luyện thi chứng chỉ AWS Solution Architect Professional Certificate.
 
 ## Tuần 4 - Migrations
+- *__Operational Costs__ – Operational costs are the costs of running your infrastructure. They include the unit price of infrastructure, matching supply and demand, investment risk for new applications, markets, and ventures, employing an elastic cost base, and building transparency into the IT operating model.*
+- *__Workforce Productivity__ – Workforce productivity is how efficiently you are able to get your services to market. You can quickly provision AWS services, which increases your productivity by letting you focus on the things that make your business different; rather than spending time on the things that don’t, like managing data centers. With over 90 services at your disposal, you eliminate the need to build and maintain these independently. We see workforce productivity improvements of 30%-50% following a large migration.*
+- *__Cost Avoidance__ – Cost avoidance is setting up an environment that does not create unnecessary costs. Eliminating the need for hardware refresh and maintenance programs is a key contributor to cost avoidance. Customers tell us they are not interested in the cost and effort required to execute a big refresh cycle or data center renewal and are accelerating their move to the cloud as a result.*
+- *__Operational Resilience__ – Operational resilience is reducing your organization’s risk profile and the cost of risk mitigation. With 16 Regions comprising 42 Availability Zones (AZs) as of June 2017, With AWS, you can deploy your applications in multiple regions around the world, which improves your uptime and reduces your risk-related costs. After migrating to AWS, our customers have seen improvements in application performance, better security, and reduction in high-severity incidents.For example, GE Oil & Gas saw a 98% reduction in P1/P0 incidents with improved application performance.*
+- *__Business Agility__ – Business agility is the ability to react quickly to changing market conditions. Migrating to the AWS Cloud helps increase your overall operational agility. You can expand into new markets, take products to market quickly, and acquire assets that offer a competitive advantage. You also have the flexibility to speed up divestiture or acquisition of lines of business. Operational speed, standardization, and flexibility develop when you use DevOps models automation, monitoring, and auto-recovery or high-availability capabilities.*
+### Business Drivers
 
 ### Migration - Strategies
 
 - **Re-Host**: "Lift and Shift"; chuyển assets từ on-prem lên cloud mà không thay đổi gì hết. Effort: * * , Khả năng(cơ hội) tối ưu hóa: * *  \ Ex: Chuyển on-prem MySQL DB lên EC2 Instance.
 - **Re-Platform**: "Lift and Reshape"; Chuyển assets và thay đổi underlying platform. Effort: * * * * , Khả năng(cơ hội) tối ưu hóa: * * *  \ Ex: Migrate on-prem MySQL DB đên RDS MySQL.
-- **Re-Purchase**: "Drop and Shop"; Bỏ hệ thống đang chạy trên on-prem, tạo mới hoàn toàn trên cloud. Effort: * * * , Khả năng(cơ hội) tối ưu hóa: *  \ Ex: Migrate legacy on-prem CRM system to salesforece.com
+- **Re-Purchase**: "Drop and Shop"; Bỏ hệ thống đang chạy trên on-prem, tạo mới hoàn toàn trên cloud(*Move from perpetual licenses to a software-as-a-service model*). Effort: * * * , Khả năng(cơ hội) tối ưu hóa: *  \ Ex: Migrate legacy on-prem CRM system to salesforece.com
 - **Rearchitect**: Design lại apps với cloud-native manner. Effort: * * * * * , Khả năng(cơ hội) tối ưu hóa: * * * * *  \ Ex: Tạo một serverless version của application.
-- **Retire**: Đánh giá những app không còn cần nữa. Effort: - , Khả năng(cơ hội) tối ưu hóa: - \ Ex: ...
+- **Retire**: Đánh giá những app không còn cần nữa(*Remove applications that are no longer needed*). Effort: - , Khả năng(cơ hội) tối ưu hóa: - \ Ex: ...
 - **Retain**: "Do nothing option"; Quyết định sẽ đánh giá lại trong tương lai. Effort: * , Khả năng(cơ hội) tối ưu hóa: - \ Ex: ...
+- Tham khảo thêm: [6 Strategies for Migrating Applications to the Cloud](https://aws.amazon.com/blogs/enterprise-strategy/6-strategies-for-migrating-applications-to-the-cloud/)
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/CompareMigrationStrategies.png" alt="Compare Migration Strategies">
+</p>
 
 ### Cloud Adoption Framework
 #### 1. The Open Group Architecture Framework(TOGAF)
 - Tự tìm hiểu sau
+#### 2. AWS Cloud Adoption Framework
+- *Cloud adoption requires that fundamental changes are discussed and considered across the entire organization, and that stakeholders across all organizational units—both outside and within IT—support these changes. The AWS Cloud Adoption Framework (AWS CAF) provides guidance that supports each unit in your organization so that each area understands how to update skills, adapt existing processes, and introduce new processes to take maximum advantage of the services provided by cloud computing.*
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/AwsCAF.png" alt="AWS CAF">
+</p>
+
+- *In general, the Business, People, and Governance Perspectives focus on business capabilities, and the Platform, Security, and Operations Perspectives focus on technical capabilities.*
 
 ### Hybrid Architecture
 - Hybrid Architecture kết hợp cloud resources và on-premises resources.
@@ -25,8 +44,32 @@ Ghi chú lại kiến thức đã học trong quá trình luyện thi chứng ch
 
 ### Migration Tools
 #### 1. Storage Migration
-- AWS Storage Gateway
-- AWS Snowball
+##### AWS Storage Gateway
+- Cầu nối giữa on-prem data và cloud data trong S3.
+- Use cases: disaster recovery, backup & restore, tiered storage
+- 3 loại Storage Gateway:
+###### File Gateway
+- Là một máy ảo cầu nối giữa NFS và S3
+- Metadata and directory structure are preserved ????????
+- Config để có thể access được S3 thông qua NFS và SMB protocol
+- Mỗi File Gateway nên có một IAM role để access S3.
+- Hầu hết "recently used data" được cache ở File Gateway
+- Có thể mount trên nhiều server.
+- Tham khảo thêm: [File Gateway for Hybrid Architecture](https://d0.awsstatic.com/whitepapers/aws-storage-gateway-file-gateway-for-hybrid-architectures.pdf)
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/FileGateway.png" alt="File Gateway">
+    <a>File Gateway</a>
+</p>
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/FileGatewayExtensions.png" alt="File Gateway: Extentions">
+    <a>File Gateway: Extensions</a>
+</p>
+
+###### Volume Gateway
+###### Tape Gateway
+##### AWS Snowball
 #### 2. Server Migration Service
 - AWS Server Migration Service
     - Auto migration on-prem VMware vSphere hoặc Microsoft Hyper-V/SCVMM virtual machines lên AWS.
