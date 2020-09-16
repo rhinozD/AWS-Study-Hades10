@@ -59,11 +59,13 @@ Ghi chú lại kiến thức đã học trong quá trình luyện thi chứng ch
 
 <p align="center"> 
     <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/FileGateway.png" alt="File Gateway">
+    <br/>
     <a>File Gateway</a>
 </p>
 
 <p align="center"> 
     <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/FileGatewayExtensions.png" alt="File Gateway: Extentions">
+    <br/>
     <a>File Gateway: Extensions</a>
 </p>
 
