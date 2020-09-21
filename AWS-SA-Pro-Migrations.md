@@ -94,8 +94,60 @@ Ghi chú lại kiến thức đã học trong quá trình luyện thi chứng ch
         - Cho phép File Gateway có chức năng: Write Once Read Many (WORM)
         - Nếu có file được sửa hoặc đổi tên trên file share clients, file gateway tạo một version mới của object mà không ảnh hưởng đến versions trước, và version đã được lock đầu tiền sẽ luôn luôn không đổi.
 ###### Volume Gateway
+- Block storage using iSCSI protocol backed by S3
+- Cached volumes: low latency access to most recent data, full data on S3
+- Stored volumes: entire dataset is on premise, scheduled backups to S3
+- Can create EBS snapshots from the volumes and restore as EBS!
+- Up to 32 volumes per gateway
+    - Each volume up to 32TB in cached mode (1PB per Gateway)
+    - Each volume up to 16 TB in stored mode (512TB per Gateway)
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/VolumeGateway.png" alt="Volume Gateway">
+    <br/>
+    <a>Volume Gateway</a>
+</p>
+
 ###### Tape Gateway
+- Some companies have backup processes using physical tapes (!)
+- With Tape Gateway, companies use the same processes but in the cloud
+- Virtual Tape Library (VTL) backed by Amazon S3 and Glacier
+- Back up data using existing tape-based processes (and iSCSI interface)
+- Works with leading backup software vendors
+- You can’t access single file within tapes. You need to restore the tape entirely
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/TapeGateway.png" alt="Tape Gateway">
+    <br/>
+    <a>Tape Gateway</a>
+</p>
+
 ##### AWS Snowball
+- Physical data transport solution that helps moving TBs or PBs of data in or out of AWS
+- Alternative to moving data over the network (and paying network fees)
+- Secure, tamper resistant, uses KMS 256 bit encryption
+- Tracking using SNS and text messages. E-ink shipping label
+- Snowball size: 50TB and 80TB
+- Use cases: large data cloud migrations, DC decommission(ngừng hoạt động), disaster recovery
+- If it takes more than a week to transfer over the network, use Snowball devices!
+- Snowball Process
+    - Request snowball devices from the AWS console for delivery
+    - Install the snowball client on your servers
+    - Connect the snowball to your servers and copy files using the client
+    - Ship back the device when you’re done (goes to the right AWS facility)
+    - Data will be loaded into an S3 bucket
+    - Snowball is completely wiped
+    - Tracking is done using SNS, text messages and the AWS console
+
+##### AWS Snowball Edge
+- Snowball Edges add computational capability to the device
+- 100 TB capacity with either: 
+    - Storage optimized – 24 vCPU 
+    - Compute optimized – 52 vCPU & optional GPU
+- Supports a custom EC2 AMI so you can perform processing on the go
+- Supports custom Lambda functions
+- Very useful to pre-process the data while moving
+- Use case: data migration, image collation, IoT capture, machine learning
 #### 2. Server Migration Service
 - AWS Server Migration Service
     - Auto migration on-prem VMware vSphere hoặc Microsoft Hyper-V/SCVMM virtual machines lên AWS.
@@ -109,6 +161,13 @@ Ghi chú lại kiến thức đã học trong quá trình luyện thi chứng ch
 - DMS sử dụng conversions nhỏ hơn, đơn giản hơn và có support MongoDB và DynamoDB.
 - SCT sử dụng cho datasets lớn hơn, phức tạp hơn như data warehouses.
 - DMS có chức năng replication cho on-prem -> AWS hoặc -> Snowball hoặc -> S3.
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/migration/DMSSourceAndTarget.png" alt="DMS">
+    <br/>
+    <a>DMS Source and Target</a>
+</p>
+
 #### 4. Application Discovery Service
 - Thu thập thông tin của on-prem data centers phục vụ cloud migration planning.
 - Thông thường thì customers không biết 100% hệ thống cũng như trạng thái của tất cả data center assets của họ, Application Discovery Service có thể giải quyết vấn đề này.
