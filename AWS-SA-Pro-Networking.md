@@ -54,7 +54,13 @@ __Hạn chế__
 - Tự chịu trách nhiện về redundancy và failover ở phía customer endpoint nếu yêu cầu.
 - Customer device phải support single-hop BGP nếu như sử dụng BGP cho dynamic routing.
 
-![Semantic description of image](/resources/images/networking/awsmanagedvpn.png#center "Image Title")
+
+
+
+![Semantic description of image](/resources/images/networking/awsmanagedvpn.png#center)
+
+
+
 
 <p align="center"> 
     <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/networking/awsmanagedvpn.png" alt="AWS Managed VPN">
