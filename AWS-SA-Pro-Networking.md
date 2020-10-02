@@ -4,7 +4,7 @@ Ghi chú lại kiến thức đã học trong quá trình luyện thi chứng ch
 ## Tuần 2 - Networking
 
 ### Networking - Concepts
-<h2><a href="www.google.com">google</a></h2>
+<h2><a href="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/AWS-SA-Pro-Networking.md#2-aws-direct-connect">Direct connect</a></h2>
 #### 1. OSI Model
 OSI Model có 7 Layer(Từ thấp đến cao)
 - __Physical__ (_Tầng vật lý_)  - AWS chịu trách nhiệm
