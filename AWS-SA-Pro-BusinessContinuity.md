@@ -16,7 +16,7 @@ Ghi chú lại kiến thức đã học trong quá trình luyện thi chứng ch
 - Migration and Hybrid architectures
 
 ### Building Fault Tolerant Apps on AWS
-1. Amazon Machine Image (AMI)
+1. __Amazon Machine Image (AMI)__
 > AMI hiểu đơn giản là một software configuration được apply vào EC2 instance. Nó bao gồm: Operating system, Application server, Applications
 + Bước đầu tiên để build fault-tolerant applications trên AWS là tạo ra một library AMIs(có thể là custom AMIs)
 + Should: Tạo ít nhất một custom AMI để sử dụng cho application
@@ -29,7 +29,7 @@ Ghi chú lại kiến thức đã học trong quá trình luyện thi chứng ch
 + User dễ dàng failover sang instance thay thế hoặc instance dự phòng bằng cách remapping EIP đến instance mới đó(Floating IP)
 - Có thể nhanh chóng khởi chạy các instance thay thế dựa trên AMI đã được định nghĩa là bước quan trọng đầu tiên hướng tới khả năng chịu lỗi(fault tolerance).
 
-2. Elastic Block Store (EBS) - Storing Persistent Data
+2. __Elastic Block Store (EBS)__ - Storing Persistent Data
 Amazon EBS volumes có độ tin cậy cao(highly reliable), nhưng để giảm thiểu khả năng xảy ra lỗi, backups của các volume có thể được tạo bằng snapshots. 
 
 Snapshots có thể được sử dụng để tạo các Amazon EBS volume mới, là bản sao chính xác của tập gốc tại thời điểm snapshot. 
@@ -43,7 +43,7 @@ Vì các backups represent the on-disk state of the application, nên phải c�
 - Snapshots được lữu trữ trong S3 đảm bảo high-durability.
 - Có thể copy EBS snapshots sang regions khác để tạo EBS volumes. (Note: EBS volumes phạm vi AZ, Snapshot phạm vi region)
 
-3. Auto Scaling & ELB
+3. __Auto Scaling & ELB__
 
 > __Auto Scaling__
 - Auto Scaling enables you to automatically scale your Amazon EC2 capacity up or down.
@@ -66,7 +66,7 @@ Bài toán:
     <br/>
 </p>
 
-4. Regions and Availability Zones
+4. __Regions and Availability Zones__
 
 > __Regions and Availability Zones__
 - Another key element to achieving greater fault tolerance is to distribute your application geographically.
@@ -95,7 +95,7 @@ Bài toán:
 - This multi-site solution is highly available, and by design will cope with individual component or even Availability Zone failures.
 - You can also use Route53 to build fault tolerance applications across AWS Regions for higher availability and Disaster Recovery
 
-5. Simple Storage Service(S3)
+5. __Simple Storage Service(S3)__
 - Amazon Simple Storage Service (Amazon S3) is a deceptively simple(đơn giản) web service that provides highly durable, fault-tolerant data/object storage.
 - Amazon Web Services is responsible for maintaining availability and fault-tolerance; you simply pay for the storage that you use.
 - Behind the scenes, Amazon S3 stores objects redundantly on multiple devices across multiple facilities in an Amazon S3 Region –
@@ -105,7 +105,7 @@ Bài toán:
     - Versioning also protects against accidental deletions initiated by a misbehaving application. Versioning can be enabled for any of your S3 buckets.
 - By using Amazon S3, you can delegate the responsibility of one critical aspect of fault tolerance – data storage – to Amazon Web Services.(AWS lo, chỉ cần user setting)
 
-6. Relational DB Service
+6. __Relational DB Service__
 > __RDS__
 - In the context of building fault-tolerant and highly available applications, Amazon RDS offers several features to enhance(nâng cao) the reliability of critical databases.
     - Automated backups:
@@ -131,7 +131,7 @@ Bài toán:
     - What are the best practices to improve the DR processes, from minimal investments(đầu tư) to full-scale availability and fault tolerance, and
     - How to use AWS services to reduce cost and ensure business continuity during a DR event.
 
-1. RTO and RPO
+1. __RTO and RPO__
 - Recovery time objective (RTO) —
     - The time it takes after a disruption to restore a business process to its service level, as defined by the operational level agreement (OLA).
     - For example, if a disaster occurs at 12:00 PM (noon) and the RTO is eight hours, the DR process should restore the business process to the acceptable service level by 8:00 PM.
@@ -146,7 +146,7 @@ Bài toán:
     <br/>
 </p>
 
-2. AWS Services for Backup and DR
+2. __AWS Services for Backup and DR__
 - __Elastic Compute Cloud (Amazon EC2)__
     - Within minutes, you can create Amazon EC2 instances, which are virtual machines over which you have complete control.
 - In the context of DR, the ability to rapidly create virtual machines that you can control is critical.
@@ -169,7 +169,7 @@ Bài toán:
     - Amazon EBS volumes provide off-instance storage that persists independently from the life of an instance
         - It is replicated across multiple servers in an Availability Zone to prevent the loss of data from the failure of any single component. (được replica trên nhiều servers trong AZ để đảm bảo không mất data)
 
-3. AWS Storage Gateway
+3. __AWS Storage Gateway__
 - AWS Storage Gateway supports three storage interfaces (or Storage Configurations): file gateway, volume gateway , and tape gateway.
     - Each gateway you have can provide one type of interface.
 - The volume gateway provides block storage to your applications using the iSCSI protocol.
@@ -178,17 +178,17 @@ Bài toán:
 - The tape gateway provides your backup application with an iSCSI virtual tape library (VTL) interface, consisting of a virtual media changer, virtual tape drives, and virtual tapes.
     - Virtual tape data is stored in Amazon S3 or can be archived to Amazon Glacier.
 
-4. Services for Backup and DR
+4. __Services for Backup and DR__
 - __Snowball__ : Used to transfer Terabytes to Petabytes of data in and out of AWS
     - As a rule of thumb, if it takes more than one week to upload your data to AWS using the spare capacity of your existing Internet connection, then you should consider using Snowball.
     - Comes in three flavors, Snowball, Snowball Edge, and Snowmobile
 
-5. AWS VM Import/Export
+5. __AWS VM Import/Export__
 - VM Import/Export enables you to easily import virtual machine images from your existing environment to Amazon EC2 instances.
 - You can also export the imported instances back to your on-premises virtualization infrastructure, allowing you to deploy workloads across your IT infrastructure.
 - VM Import/Export is available at no additional charge beyond standard usage charges for Amazon EC2 and Amazon S3.
 
-6. Networking
+6. __Networking__
 - When you are dealing with a disaster, it’s very likely that you will have to modify network settings as your system is failing over to another site.
 - The following AWS services and features enable you to manage and modify network settings.
     - Amazon Route 53
@@ -206,7 +206,7 @@ Bài toán:
     - Amazon Direct Connect makes it easy to set up a dedicated network connection from your premises to AWS.
         - This can reduce your network costs, increase bandwidth throughput, and provide a more consistent network experience than Internet-based connections.
 
-7. Database
+7. __Database__
 - Amazon Relational Database Service (__Amazon RDS__)
     - You can use Amazon RDS either in the preparation phase for DR to hold your critical data in a database that is already running, or in the recovery phase to run your production database.
     - When you want to look at multiple regions, Amazon RDS gives you the ability to snapshot data from one region to another, and also to have a read replica running in another region.
@@ -218,7 +218,7 @@ Bài toán:
     - You can use Amazon Redshift in the preparation phase to snapshot your data warehouse to be durably stored in Amazon S3 within the same region or copied to another region.
     - During the recovery phase of DR, you can quickly restore your data warehouse into the same region or within another AWS region.
 
-8. DR Approaches/Strategies
+8. __DR Approaches/Strategies__
 - Various approaches to DR:
     - Backup and Restore
     - Pilot Light
@@ -235,14 +235,14 @@ Bài toán:
     <br/>
 </p>
 
-9. Backup and Restore
+9. __Backup and Restore__
 Key steps for backup and restore:
 - Select an appropriate tool or method to back up your data into AWS.
 - Ensure that you have an appropriate retention(lưu trữ) policy for this data.
 - Ensure that appropriate security measures are in place for this data, including encryption and access policies.
 - Regularly test the recovery of this data and the restoration of your system.
 
-10. Replication Methods and Self Healing
+10. __Replication Methods and Self Healing__
 
 __Data Replication__
 
