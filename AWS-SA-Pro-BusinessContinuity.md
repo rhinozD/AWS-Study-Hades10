@@ -107,3 +107,153 @@ Bài toán:
 
 6. Relational DB Service
 > __RDS__
+- In the context of building fault-tolerant and highly available applications, Amazon RDS offers several features to enhance(nâng cao) the reliability of critical databases.
+    - Automated backups:
+        - Of your database enable point-in-time recovery for your database instance.
+        - Amazon RDS will back up your database and transaction logs and store both for a user-specified retention period. This feature is enabled by default.
+    - Manual Snapshots:
+        - You can initiate snapshots of your DB Instance.
+        - These full database backups will be stored by Amazon RDS until you explicitly delete them.
+            - You can create a new DB Instance from a DB Snapshot whenever you desire.
+- Amazon RDS also supports a Multi-AZ deployment feature.
+    - If this is enabled, a synchronous standby replica of your database is provisioned in a different Availability Zone.
+- Updates to your DB Instance are synchronously replicated across Availability Zones to the standby in order to keep both databases in sync.
+- In case of a failover scenario, the standby is promoted to be the primary and will handle your database operations.
+- Running your DB Instance as a Multi-AZ deployment safeguards your data in the unlikely event of a DB Instance component failure or service health disruption in one Availability Zone.(Multi-AZ giúp bảo vệ dữ liệu kho có lỗi hoặc AZ chết).
+
+### Using AWS for Disaster Recovery (DR)
+- Any event that has a negative impact on a company’s business continuity or finances could be termed a disaster. This includes:
+    - Hardware or software failure, A network outage, A power outage,
+    - Physical damage to a building like fire, earthquakes, hurricanes, or flooding,
+    - Human error
+- Disaster recovery (DR) is all about preparing for and recovering from a disaster.
+- Question to be answered:
+    - What are the best practices to improve the DR processes, from minimal investments(đầu tư) to full-scale availability and fault tolerance, and
+    - How to use AWS services to reduce cost and ensure business continuity during a DR event.
+
+1. RTO and RPO
+- Recovery time objective (RTO) —
+    - The time it takes after a disruption to restore a business process to its service level, as defined by the operational level agreement (OLA).
+    - For example, if a disaster occurs at 12:00 PM (noon) and the RTO is eight hours, the DR process should restore the business process to the acceptable service level by 8:00 PM.
+- Recovery point objective (RPO) —
+    - The acceptable amount of data loss measured in time.
+    - For example, if a disaster occurs at 12:00 PM (noon) and the RPO is one hour, the system should recover all data that was in the system before 11:00 AM.
+        - Data loss will span only one hour, between 11:00 AM and 12:00 PM (noon).
+- A company typically decides on an acceptable RTO and RPO based on the financial impact to the business when systems are unavailable.
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/businesscontinuity/rporto.jpg" alt="RTO RPO">
+    <br/>
+</p>
+
+2. AWS Services for Backup and DR
+- __Elastic Compute Cloud (Amazon EC2)__
+    - Within minutes, you can create Amazon EC2 instances, which are virtual machines over which you have complete control.
+- In the context of DR, the ability to rapidly create virtual machines that you can control is critical.
+- Amazon Machine Images (AMIs) are preconfigured with operating systems, and some preconfigured AMIs might also include application stacks.
+- In the context of DR, AWS strongly recommends that you configure and identify your own AMIs so that they can launch as part of your recovery procedure.
+    - Such AMIs should be preconfigured with your operating system of choice plus appropriate pieces of the application stack.
+    - You can copy your AMIs to other regions for DR purposes
+- __Storage__
+    - __Simple Storage Service (S3)__:
+        - Provides a highly durable storage infrastructure designed for mission-critical and primary data storage.
+        - Objects are redundantly stored on multiple devices across multiple facilities within a region, designed to provide a durability of 99.999999999%.
+        - AWS provides further protection for data retention and archiving through versioning in Amazon S3, AWS multi-factor authentication (AWS MFA), bucket policies, and AWS IAM
+    - __Glacier__:
+        - Provides extremely low-cost storage for data archiving and backup. Objects (or archives, as they are known in Amazon Glacier) are optimized for infrequent access, for which retrieval times of several hours are adequate.
+        - Amazon Glacier is designed for the same durability as Amazon S3.
+- __AWS Elastic Block Store (EBS)__:
+    - Provides the ability to create point-in-time snapshots of data volumes.
+    - You can use the snapshots as the starting point for new Amazon EBS volumes.
+    - You can protect your data for long-term durability because snapshots are stored within Amazon S3.
+    - Amazon EBS volumes provide off-instance storage that persists independently from the life of an instance
+        - It is replicated across multiple servers in an Availability Zone to prevent the loss of data from the failure of any single component. (được replica trên nhiều servers trong AZ để đảm bảo không mất data)
+
+3. AWS Storage Gateway
+- AWS Storage Gateway supports three storage interfaces (or Storage Configurations): file gateway, volume gateway , and tape gateway.
+    - Each gateway you have can provide one type of interface.
+- The volume gateway provides block storage to your applications using the iSCSI protocol.
+    - Data on the volumes is stored in Amazon S3.
+        - To access your iSCSI volumes in AWS, you can take EBS snapshots which can be used to create EBS volumes.
+- The tape gateway provides your backup application with an iSCSI virtual tape library (VTL) interface, consisting of a virtual media changer, virtual tape drives, and virtual tapes.
+    - Virtual tape data is stored in Amazon S3 or can be archived to Amazon Glacier.
+
+4. Services for Backup and DR
+- __Snowball__ : Used to transfer Terabytes to Petabytes of data in and out of AWS
+    - As a rule of thumb, if it takes more than one week to upload your data to AWS using the spare capacity of your existing Internet connection, then you should consider using Snowball.
+    - Comes in three flavors, Snowball, Snowball Edge, and Snowmobile
+
+5. AWS VM Import/Export
+- VM Import/Export enables you to easily import virtual machine images from your existing environment to Amazon EC2 instances.
+- You can also export the imported instances back to your on-premises virtualization infrastructure, allowing you to deploy workloads across your IT infrastructure.
+- VM Import/Export is available at no additional charge beyond standard usage charges for Amazon EC2 and Amazon S3.
+
+6. Networking
+- When you are dealing with a disaster, it’s very likely that you will have to modify network settings as your system is failing over to another site.
+- The following AWS services and features enable you to manage and modify network settings.
+    - Amazon Route 53
+        - It gives developers and businesses a reliable, cost-effective way to route users to Internet applications.
+        - Amazon Route 53 includes a number of global load-balancing capabilities (which can be effective when you are dealing with DR scenarios such as DNS endpoint health checks) and,
+        - The ability to failover between multiple endpoints and even static websites hosted in Amazon S3.
+    - Elastic IP addresses
+        - Elastic IP addresses enable you to mask instance or Availability Zone failures by programmatically remapping your public IP addresses to instances in your account in a particular region.
+        - For DR, you can also pre-allocate some IP addresses for the most critical systems so that their IP addresses are already known before disaster strikes.
+    - Elastic Load Balancing
+        - Just as you can pre-allocate Elastic IP addresses, you can pre-allocate your load balancer so that its DNS name is already known, which can simplify the execution of your DR plan.
+    - Amazon Virtual Private Cloud (Amazon VPC)
+        - In the context of DR, you can use Amazon VPC to extend your existing network topology to the cloud;(Kêt hợp giữa on-pre và cloud)
+        - This can be especially appropriate when recovering enterprise applications that are typically on the internal network.
+    - Amazon Direct Connect makes it easy to set up a dedicated network connection from your premises to AWS.
+        - This can reduce your network costs, increase bandwidth throughput, and provide a more consistent network experience than Internet-based connections.
+
+7. Database
+- Amazon Relational Database Service (__Amazon RDS__)
+    - You can use Amazon RDS either in the preparation phase for DR to hold your critical data in a database that is already running, or in the recovery phase to run your production database.
+    - When you want to look at multiple regions, Amazon RDS gives you the ability to snapshot data from one region to another, and also to have a read replica running in another region.
+- __Amazon DynamoDB__
+    - You can also use it in the preparation phase to copy data to DynamoDB in another region or to Amazon S3.
+    - During the recovery phase of DR, you can scale up seamlessly in a matter of minutes with a single click or API call.
+    - You can also benefit from Global Tables (Cross Region Replication)
+- __Amazon Redshift__
+    - You can use Amazon Redshift in the preparation phase to snapshot your data warehouse to be durably stored in Amazon S3 within the same region or copied to another region.
+    - During the recovery phase of DR, you can quickly restore your data warehouse into the same region or within another AWS region.
+
+8. DR Approaches/Strategies
+- Various approaches to DR:
+    - Backup and Restore
+    - Pilot Light
+    - Warm standby
+    - Multi Site
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/businesscontinuity/drstragies.jpg" alt="DR Approaches">
+    <br/>
+</p>
+
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/businesscontinuity/drstragiessolution.jpg" alt="DR Approaches Spectrum Solutions">
+    <br/>
+</p>
+
+9. Backup and Restore
+Key steps for backup and restore:
+- Select an appropriate tool or method to back up your data into AWS.
+- Ensure that you have an appropriate retention(lưu trữ) policy for this data.
+- Ensure that appropriate security measures are in place for this data, including encryption and access policies.
+- Regularly test the recovery of this data and the restoration of your system.
+
+10. Replication Methods and Self Healing
+__Data Replication__
+
+- Many database systems support asynchronous data replication.
+- The database replica can be located remotely, and the replica does not have to be completely synchronized with the primary database server.
+    - This is acceptable in many scenarios, for example, as a backup source or reporting/read-only use cases.
+    - In addition to database systems, you can also extend it to network file systems and data volumes.
+
+__Self Healing__
+
+- SQS to decouple
+- CW and Auto Scaling terminating unhealthy instance
+- Auto Scaling creating replacement EC2 instances to replace those terminated
+- Amazon S3 also performs regular, systematic data integrity checks(tính toàn vẹn dữ liệu) and is built to be automatically self-healing.
+- Amazon Glacier performs regular, systematic data integrity checks and is built to be automatically self-healing.
