@@ -243,6 +243,7 @@ Key steps for backup and restore:
 - Regularly test the recovery of this data and the restoration of your system.
 
 10. Replication Methods and Self Healing
+
 __Data Replication__
 
 - Many database systems support asynchronous data replication.
