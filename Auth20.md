@@ -49,3 +49,10 @@ Vấn đề phát sinh:
 
 ### OAuth2.0 authorization code flow
 
+<p align="center"> 
+    <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/OAuth2/5.PNG" alt="authorization code flow">
+</p>
+
+### Thêm thuật ngữ
+- Scope: String, giới hạn quyền access.
+- Consent: 
