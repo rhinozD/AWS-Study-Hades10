@@ -37,3 +37,15 @@ Vấn đề phát sinh:
 <p align="center"> 
     <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/OAuth2/4.PNG" alt="OAuth2.0 overview flow">
 </p>
+
+## OAuth2.0
+### Các thuật ngữ
+- Resource owner: User( thằng ngồi sau bàn phím bấm yes, no)
+- Client: Application cần được cấp quyền access (Yelp)
+- Authorization server: Server hoặc system chứa users identity(- chứa user account) (accounts.google.com)
+- Resource server: Server có data mà client muốn lấy(có thể là contacts API của google). Nhiều khi Authorization server và Resource server được gộp làm một server.
+- Authorization grant: Các phương thức Author dùng để lấy được access token.
+- Access token: Được dùng để gửi để resource server và lấy data cần lấy.
+
+### OAuth2.0 authorization code flow
+
