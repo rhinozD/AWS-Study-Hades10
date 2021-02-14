@@ -28,6 +28,12 @@ Vấn đề phát sinh:
 </p>
 
 **-> Có thể thực hiện với OAuth2.0**
+1. User click "Connect with Google"
+2. User nhập thông tin đăng nhập google.
+3. User có thể click vào yes để cho phép Yelp access thông tin của mình. Có thể click No để Deny.
+4. Trong trường hợp User click Yes ở bước 3, yelp sẽ nhận được được access token từ google.
+5. Sử dụng access token để access và lấy thông tin contacts.
+
 <p align="center"> 
     <img src="https://github.com/sadsun92/AWS-Study-Hades10/blob/master/resources/images/OAuth2/4.PNG" alt="OAuth2.0 overview flow">
 </p>
